@@ -1,0 +1,29 @@
+<div *ngIf="isDataAvailable">
+  <app-nav-bar></app-nav-bar>
+  <div [ngClass]="'container'" [id]="'recipe'">
+    <div>
+      <div [ngStyle]="{backgroundImage: 'url(' + this.recipe.strMealThumb + ')'}">
+        <p>{{recipe.strTime}}</p>
+        <p>{{recipe.strMeal}}</p>
+      </div>
+      <p>{{recipe.strDescription}}</p>
+      <div>
+        <button>Edit</button>
+        <h2>Ingredients</h2>
+        <ul>
+          <li *ngFor="let measure of recipe.strMeasures">
+            {{measure}}
+          </li>
+        </ul>
+        <ul>
+          <li *ngFor="let ingredients of recipe.strIngredients">
+            {{ingredients}}
+          </li>
+        </ul>
+      </div>
+
+      <h2>Preparing</h2>
+      <p>{{recipe.strInstructions}}</p>
+    </div>
+  </div>
+</div>

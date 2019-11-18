@@ -1,0 +1,14 @@
+@import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
+#ingredients{
+  >label{
+    width:30vw;
+  }
+  >label:last-of-type{
+   float:right;
+    text-align: right;
+  }
+  >input{
+    width:50%;
+    display:inline-block;
+  }
+}

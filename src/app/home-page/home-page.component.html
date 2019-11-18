@@ -1,0 +1,15 @@
+
+<div [ngClass]="'homePage'">
+  <app-nav-bar></app-nav-bar>
+  <div [ngClass]="'container'">
+  <h2>Latest recipes</h2>
+    <div>
+      <a *ngFor="let recipe of recipes" [title]="recipe.strMeal" [routerLink]="['/recipes', recipe.idMeal]" [state]="{recipeID:this.recipe.idMeal}">
+        <div [ngStyle]="{backgroundImage: 'url(' + recipe.strMealThumb + ')'}">
+          <p>{{recipe.strTime}}</p>
+          <p>{{recipe.strMeal}}</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

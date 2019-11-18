@@ -1,0 +1,60 @@
+.homePage{
+  >div:last-of-type{
+      >div {
+        display:flex;
+        >a:first-of-type{
+          margin-right:1vw;
+        }
+        >a:last-of-type{
+          margin-left:1vw
+        }
+        > a {
+          width: 32.666666667%;
+          display:block;
+          > div {
+            height: 40vh;
+            background-size: cover;
+            position: relative;
+            border-radius:5px;
+            > p {
+              position: absolute;
+              color: white;
+            }
+            > p:first-of-type {
+              bottom: 20px;
+              left: 10px;
+            }
+            > p:last-of-type {
+              bottom: 6px;
+              left: 10px;
+              font-size: 1.4em;
+              font-weight: 700;
+              margin:0;
+            }
+          }
+        }
+      }
+  }
+}
+@media(max-width: 900px){
+  .homePage{
+    >div {
+      > h2 {
+        margin-left: 2%;
+      }
+    }
+  }
+}
+@media(max-width: 650px){
+  .homePage{
+    >div:last-of-type{
+       >div{
+         flex-direction: column;
+         >a{
+           width:100%;
+           margin: 0 0 2%;
+         }
+       }
+    }
+  }
+}
