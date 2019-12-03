@@ -16,7 +16,6 @@ export class EditRecipeComponent implements OnInit {
 
   private id;
 
-
   constructor(public firebaseService: FirebaseService) {
     this.firebaseService.getRecipes().subscribe(
       snapshot => {
@@ -26,7 +25,6 @@ export class EditRecipeComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.id);
   }
 
   checkDisabledButton() {
@@ -38,24 +36,26 @@ export class EditRecipeComponent implements OnInit {
   }
 
   addIngredient() {
-    this.ingredients.push({
-      ingredient: '',
-      measure: ''
-    });
+    if (this.ingredients[this.ingredients.length - 1].ingredient.length > 0 && this.ingredients[this.ingredients.length - 1].measure.length > 0) {
+      this.ingredients.push({
+        ingredient: '',
+        measure: ''
+      });
+    } else {
+      alert("First complete last input")
+    }
     this.checkDisabledButton();
-    console.log('test', 'ingredients', this.ingredients, this.disabled);
   }
 
   sendToFirebase(recipe) {
     this.firebaseService.createRecipe(recipe).then(
       res => {
-        console.log(res);
+        alert(res);
       }
     );
   }
 
   removeInputs(i) {
-    console.log('działa');
     this.ingredients.splice(i, 1);
     this.checkDisabledButton();
   }
@@ -79,7 +79,6 @@ export class EditRecipeComponent implements OnInit {
       strIngredients: ingredients,
       strMeasures: measures,
     };
-    console.log(recipeToSend);
     this.sendToFirebase(recipeToSend);
   }
 
