@@ -19,4 +19,11 @@ export class HomePageComponent implements OnInit {
   }
 
 
+  public getBackgroundImage(url): String {
+    if(url.length>0){
+      return 'url(' + url + ')'
+    }else{
+      return 'url(http://placekitten.com/200/300)'
+    }
+  }
 }
