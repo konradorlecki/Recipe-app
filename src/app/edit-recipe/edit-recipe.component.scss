@@ -1,23 +1,38 @@
 @import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
-.editRecipe{
-  >form{
-    >button:last-of-type{
-      float:right;
+
+.editRecipe {
+  > form {
+    > button {
+      margin-top: 3vh;
+    }
+
+    > button:last-of-type {
+      float: right;
     }
   }
 }
-#ingredients{
-  >label{
-    width:30vw;
+
+#ingredients {
+  > label {
+    width: 30vw;
   }
-  >label:last-of-type{
-   float:right;
+
+  > label:last-of-type {
+    float: right;
     text-align: right;
+    margin-right: 10%;
   }
-  >div {
+
+  > div {
+    margin-bottom:0.5%;
     > input {
-      width: 50%;
+      width: 45%;
       display: inline-block;
+    }
+
+    > button {
+      margin-left: 4%;
+      width: 6%;
     }
   }
 }
