@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FirebaseService} from '../services/firebase.service';
 import {NgForm} from '@angular/forms';
+import {stringify} from 'querystring';
 
 @Component({
   selector: 'app-edit-recipe',
@@ -46,12 +47,24 @@ export class EditRecipeComponent implements OnInit {
 
   onSubmit(recipe :NgForm) {
     let value = recipe.value;
-    console.log(recipe.value);
+    let ingredients = [];
+    let measures = [];
+    this.ingredients.forEach((e)=>{
+      ingredients.push(e.ingredient);
+      measures.push(e.measure);
+    })
     let recipeToSend={
-      idMeal:this.id,
+      idMeal: this.id.toString(),
       strMeal: value.name,
-
+      strTime: value.time + 'min',
+      strDescription: value.description,
+      strInstructions: value.instruction,
+      strMealThumb: value.image,
+      strIngredients: ingredients,
+      strMeasures:measures,
     }
+    console.log(recipeToSend);
+    this.sendToFirebase(recipeToSend);
   }
 
 }
