@@ -2,15 +2,17 @@
   >div:last-of-type{
       >div {
         display:flex;
-        >a:first-of-type{
-          margin-right:1vw;
+        flex-wrap: wrap;
+        >a:nth-of-type(3n+1){
+          margin-right:1%;
         }
-        >a:last-of-type{
-          margin-left:1vw
+        >a:nth-of-type(3n+3){
+          margin-left:1%;
         }
         > a {
           width: 32.666666667%;
           display:block;
+          margin-bottom:1%;
           > div {
             height: 40vh;
             background-size: cover;
