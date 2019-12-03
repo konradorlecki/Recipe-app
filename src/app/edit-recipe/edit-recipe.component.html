@@ -34,14 +34,17 @@
         <div class="form-group" [id]="'ingredients'">
           <label>Ingredients</label>
           <label>Measures</label>
-          <div *ngFor="let i = index; let ingredient of ingredients">
+          <div *ngFor="let ingredient of ingredients; let i = index">
             <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                    [(ngModel)]="ingredient.ingredient">
             <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                    [(ngModel)]="ingredient.measure">
+            <button type="button" [ngClass]="'btn btn-danger'" [hidden]="disabled"
+                    (click)="removeInputs(i)">Delete
+            </button>
           </div>
         </div>
-        <button type="button" (click)="addIngredient()">Add ingredient</button>
+        <button type="button" (click)="addIngredient()" class="btn btn-primary">Add ingredient</button>
         <button type="submit" class="btn btn-success">Submit</button>
       </form>
     </div>

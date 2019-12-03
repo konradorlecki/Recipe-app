@@ -12,9 +12,9 @@ export class EditRecipeComponent implements OnInit {
     ingredient: '',
     measure: ''
   }];
+  public disabled = true;
 
   private id;
-
 
   constructor(public firebaseService: FirebaseService) {
     this.firebaseService.getRecipes().subscribe(
@@ -25,23 +25,39 @@ export class EditRecipeComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.id);
+  }
+
+  checkDisabledButton() {
+    if (this.ingredients.length > 1) {
+      this.disabled = false;
+    } else {
+      this.disabled = true;
+    }
   }
 
   addIngredient() {
-    this.ingredients.push({
-      ingredient: '',
-      measure: ''
-    });
-    console.log('test', 'ingredients', this.ingredients);
+    if (this.ingredients[this.ingredients.length - 1].ingredient.length > 0 && this.ingredients[this.ingredients.length - 1].measure.length > 0) {
+      this.ingredients.push({
+        ingredient: '',
+        measure: ''
+      });
+    } else {
+      alert("First complete last input")
+    }
+    this.checkDisabledButton();
   }
 
   sendToFirebase(recipe) {
     this.firebaseService.createRecipe(recipe).then(
       res => {
-        console.log(res);
+        alert(res);
       }
     );
+  }
+
+  removeInputs(i) {
+    this.ingredients.splice(i, 1);
+    this.checkDisabledButton();
   }
 
   onSubmit(recipe: NgForm) {
@@ -63,7 +79,6 @@ export class EditRecipeComponent implements OnInit {
       strIngredients: ingredients,
       strMeasures: measures,
     };
-    console.log(recipeToSend);
     this.sendToFirebase(recipeToSend);
   }
 
