@@ -1,10 +1,13 @@
-#recipe{
+#recipe {
   white-space: pre-line;
   display: flex;
-  font-size:1.1em;
-  >div{
-    position:relative;
-    > div:first-of-type{
+  font-size: 1.1em;
+
+  > div {
+    position: relative;
+    width: 100%;
+
+    > div:first-of-type {
       height: 450px;
       width: 60%;
       background-size: cover;
@@ -13,14 +16,17 @@
       display: inline-block;
       border-radius: 5px;
       background-position: center;
+
       > p {
         position: absolute;
         color: white;
       }
+
       > p:first-of-type {
         bottom: 20px;
         left: 20px;
       }
+
       > p:last-of-type {
         bottom: 6px;
         left: 20px;
@@ -29,79 +35,95 @@
         margin: 0;
       }
     }
-    >div:last-of-type{
-      right:5px;
+
+    > div:last-of-type {
+      right: 5px;
       display: inline-block;
       width: 35%;
       position: absolute;
       top: 2vh;
-      >h2{
-        margin-top:4vh;
+
+      > h2 {
+        margin-top: 4vh;
       }
-      >button{
+
+      > button {
         background: white;
         color: #fb1;
         border: 1px solid #fb1;
         width: 100px;
         height: 40px;
       }
-      >ul{
-        display:inline-block;
+
+      > ul {
+        display: inline-block;
         list-style-type: none;
-        padding:0;
-        margin-top:0;
-        >li{
-          margin-bottom:0.5vh;
+        padding: 0;
+        margin-top: 0;
+
+        > li {
+          margin-bottom: 0.5vh;
         }
       }
-      >ul:first-of-type{
-        margin-right:4vw;
+
+      > ul:first-of-type {
+        margin-right: 4vw;
       }
     }
-    >p{
-      width:60%;
-      margin-top:3vh;
+
+    > p {
+      width: 60%;
+      margin-top: 3vh;
     }
-    >h2{
-      width:60%;
+
+    > h2 {
+      width: 60%;
     }
   }
 }
-@media(max-width: 900px){
-  #recipe{
-    width:85vw;
-    >div{
+
+@media(max-width: 900px) {
+  #recipe {
+    width: 85vw;
+
+    > div {
       position: static;
-      >div:first-of-type{
-        width:100%;
-        display:block;
+
+      > div:first-of-type {
+        width: 100%;
+        display: block;
       }
-      >div:last-of-type{
-        display:block;
-        position:static;
-        margin-top:5vh;
-        width:100%;
-        margin-bottom:3vh;
+
+      > div:last-of-type {
+        display: block;
+        position: static;
+        margin-top: 5vh;
+        width: 100%;
+        margin-bottom: 3vh;
       }
-      >p{
-        width:100%
+
+      > p {
+        width: 100%
       }
-      >h2{
-        width:100%;
+
+      > h2 {
+        width: 100%;
       }
     }
   }
 }
-@media(max-width: 600px){
-  #recipe{
-    width:95vw;
+
+@media(max-width: 600px) {
+  #recipe {
+    width: 95vw;
   }
 }
-@media(max-width:400px){
-  #recipe{
-    >div{
-      >div:first-of-type{
-        height:350px;
+
+@media(max-width: 400px) {
+  #recipe {
+    > div {
+      > div:first-of-type {
+        height: 350px;
       }
     }
   }

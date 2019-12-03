@@ -2,7 +2,7 @@
   <app-nav-bar></app-nav-bar>
   <div [ngClass]="'container'" [id]="'recipe'">
     <div>
-      <div [ngStyle]="{backgroundImage: 'url(' + this.recipe.strMealThumb + ')'}">
+      <div [ngStyle]="{backgroundImage: getBackgroundImage(recipe.strMealThumb)}">
         <p>{{recipe.strTime}}</p>
         <p>{{recipe.strMeal}}</p>
       </div>

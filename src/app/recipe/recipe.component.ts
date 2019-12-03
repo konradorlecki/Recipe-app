@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import { FirebaseService } from '../services/firebase.service';
+import {FirebaseService} from '../services/firebase.service';
+
 @Component({
   selector: 'app-recipe',
   templateUrl: './recipe.component.html',
@@ -8,22 +9,33 @@ import { FirebaseService } from '../services/firebase.service';
 })
 export class RecipeComponent implements OnInit {
   public recipe;
-  urlString:string = location.href;
-  isDataAvailable:boolean = false;
+  urlString: string = location.href;
+  isDataAvailable: boolean = false;
+
   constructor(
     private router: Router,
     public firebaseService: FirebaseService) {
 
-    this.router.routeReuseStrategy.shouldReuseRoute = function(){
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
       return false;
     };
   }
+
   ngOnInit() {
     // It works only on localhost url, should be change if url will change(or better idea to check which meal should display)
     this.urlString = this.urlString.charAt(30);
-   this.firebaseService.getRecipe(this.urlString)
-     .subscribe(
-       recipe=>{this.recipe=recipe.data(), this.isDataAvailable = true});
+    this.firebaseService.getRecipe(this.urlString)
+      .subscribe(
+        recipe => {
+          this.recipe = recipe.data(), this.isDataAvailable = true;
+        });
   }
 
+  public getBackgroundImage(url): String {
+    if (url.length > 0) {
+      return 'url(' + url + ')';
+    } else {
+      return 'url(http://placekitten.com/200/300)';
+    }
+  }
 }
