@@ -1,7 +1,7 @@
 <div>
   <app-nav-bar></app-nav-bar>
   <div class="container">
-    <div>
+    <div [ngClass]="'editRecipe'">
       <h1>Add your Recipe</h1>
       <form (ngSubmit)="onSubmit(RecipeForm)" #RecipeForm="ngForm">
         <div class="form-group">
@@ -9,12 +9,12 @@
           <input type="text" class="form-control" id="name"
                  name="name"
                  required ngModel
-                 >
+          >
         </div>
         <div class="form-group">
           <label for="time">Preparing Time</label>
           <input type="number" class="form-control" id="time"
-                 name="time" ngModel>
+                 name="time" ngModel required>
         </div>
         <div class="form-group">
           <label for="description">Description of meal</label>
@@ -22,9 +22,9 @@
                  name="description" ngModel required>
         </div>
         <div class="form-group">
-          <label for="instruction">Recipe Instruction</label>
+          <label for="instruction">Recipe Instructions</label>
           <input type="text" class="form-control" id="instruction"
-                 name="time" ngModel required>
+                 name="instruction" ngModel required>
         </div>
         <div class="form-group">
           <label for="image">Image of meal(url,not required)</label>
@@ -34,49 +34,16 @@
         <div class="form-group" [id]="'ingredients'">
           <label>Ingredients</label>
           <label>Measures</label>
-          <input type="text" class="form-control" id="ingredient1"
-                 name="ingredient1" ngModel>
-          <input type="text" class="form-control"
-                 name="measures1" ngModel>
-          <input type="text" class="form-control"
-                 name="ingredients2" ngModel>
-          <input type="text" class="form-control"
-                 name="measures2" ngModel>
-          <input type="text" class="form-control"
-                 name="ingredients3" ngModel>
-          <input type="text" class="form-control"
-                 name="measures3" ngModel>
-          <input type="text" class="form-control"
-                 name="ingredients4" ngModel>
-          <input type="text" class="form-control"
-                 name="measures4" ngModel>
-          <input type="text" class="form-control"
-                 name="ingredients5" ngModel>
-          <input type="text" class="form-control"
-                 name="measures5" ngModel>
-          <input type="text" class="form-control"
-                 name="ingredients6" ngModel>
-          <input type="text" class="form-control"
-                 name="measures6" ngModel>
-          <input type="text" class="form-control"
-                 name="ingredients7" ngModel>
-          <input type="text" class="form-control"
-                 name="measures7" ngModel>
-          <input type="text" class="form-control"
-                 name="ingredients8" ngModel>
-          <input type="text" class="form-control"
-                 name="measures8" ngModel>
-          <input type="text" class="form-control"
-                 name="ingredients9" ngModel>
-          <input type="text" class="form-control"
-                 name="measures9" ngModel>
-          <input type="text" class="form-control"
-                 name="ingredients10" ngModel>
-          <input type="text" class="form-control"
-                 name="measures10" ngModel>
+          <div *ngFor="let i = index; let ingredient of ingredients">
+            <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                   [(ngModel)]="ingredient.ingredient">
+            <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                   [(ngModel)]="ingredient.measure">
+          </div>
         </div>
+        <button type="button" (click)="addIngredient()">Add ingredient</button>
         <button type="submit" class="btn btn-success">Submit</button>
       </form>
     </div>
-    </div>
   </div>
+</div>
