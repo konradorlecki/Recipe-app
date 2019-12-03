@@ -22,7 +22,7 @@
                  name="description" ngModel required>
         </div>
         <div class="form-group">
-          <label for="instruction">Recipe Instruction</label>
+          <label for="instruction">Recipe Instructions</label>
           <input type="text" class="form-control" id="instruction"
                  name="instruction" ngModel required>
         </div>
@@ -35,13 +35,13 @@
           <label>Ingredients</label>
           <label>Measures</label>
           <div *ngFor="let i = index; let ingredient of ingredients">
-            <input type="text" class="form-control" name="ingredient[{{i}}]"
-                    [(ngModel)]="ingredient.ingredient">
+            <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                   [(ngModel)]="ingredient.ingredient">
             <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
                    [(ngModel)]="ingredient.measure">
           </div>
         </div>
-        <button type="button" (click)="addIngredient()">add ingredient</button>
+        <button type="button" (click)="addIngredient()">Add ingredient</button>
         <button type="submit" class="btn btn-success">Submit</button>
       </form>
     </div>
