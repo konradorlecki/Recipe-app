@@ -32,10 +32,10 @@ export class RecipeComponent implements OnInit {
   }
 
   public getBackgroundImage(url): String {
-    if (url.length > 0) {
-      return 'url(' + url + ')';
-    } else {
+    if (!url) {
       return 'url(http://placekitten.com/200/300)';
+    } else {
+      return 'url(' + url + ')';
     }
   }
 }
