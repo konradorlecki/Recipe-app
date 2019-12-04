@@ -18,8 +18,8 @@ export class FirebaseService {
   }
 
   createRecipe(recipe) {
-    return this.db.collection('recipes').doc(recipe.idMeal).set({
-      idMeal: recipe.idMeal,
+    return this.db.collection('recipes').doc(recipe.recipeId).set({
+      idMeal: recipe.recipeId,
       strMeal: recipe.strMeal,
       strTime: recipe.strTime,
       strDescription: recipe.strDescription,

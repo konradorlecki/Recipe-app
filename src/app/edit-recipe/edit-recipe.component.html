@@ -18,13 +18,13 @@
         </div>
         <div class="form-group">
           <label for="description">Description of meal</label>
-          <input type="text" class="form-control" id="description"
-                 name="description" [(ngModel)]="description" required>
+          <textarea type="text" class="form-control" id="description"
+                    name="description" [(ngModel)]="description" required></textarea>
         </div>
         <div class="form-group">
           <label for="instruction">Recipe Instructions</label>
-          <input type="text" class="form-control" id="instruction"
-                 name="instruction" [(ngModel)]="instruction" required>
+          <textarea type="text" class="form-control" id="instruction"
+                    name="instruction" [(ngModel)]="instruction" required></textarea>
         </div>
         <div class="form-group">
           <label for="image">Image of meal(url,not required)</label>
@@ -45,8 +45,8 @@
           </div>
         </div>
         <button type="button" (click)="addIngredient()" class="btn btn-primary">Add ingredient</button>
-        <button *ngIf="idMeal" type="button" (click)="onUpdateRecipe()" class="btn btn-success">Update</button>
-        <button *ngIf="!idMeal" type="button" (click)="onAddRecipe()" class="btn btn-success">Add</button>
+        <button *ngIf="recipeId" type="button" (click)="onUpdateRecipe()" class="btn btn-success">Update</button>
+        <button *ngIf="!recipeId" type="button" (click)="onAddRecipe()" class="btn btn-success">Add</button>
       </form>
     </div>
   </div>
