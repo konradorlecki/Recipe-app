@@ -90,14 +90,13 @@ export class EditRecipeComponent implements OnInit {
     } else alert('First complete last input');
 
 
+
     this.checkDisabledButton();
   }
 
   sendToFirebase(recipe) {
     this.firebaseService.createRecipe(recipe).then(
-      () => {
-        this.router.navigate(['/recipes']);
-      }
+      () => this.router.navigate(['/recipes'])
     );
   }
 
@@ -107,7 +106,6 @@ export class EditRecipeComponent implements OnInit {
   }
 
   onAddRecipe() {
-
     let ingredients = [];
     let measures = [];
 

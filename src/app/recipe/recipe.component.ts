@@ -10,20 +10,20 @@ import {FirebaseService} from '../services/firebase.service';
 export class RecipeComponent implements OnInit {
   public recipe;
   isDataAvailable: boolean = false;
-  idMeal;
+  recipeId;
 
   constructor(
     private router: Router,
     public firebaseService: FirebaseService,
     private route: ActivatedRoute) {
-    this.idMeal = route.snapshot.params['recipeId'];
+    this.recipeId = route.snapshot.params['recipeId'];
     this.router.routeReuseStrategy.shouldReuseRoute = function() {
       return false;
     };
   }
 
   ngOnInit() {
-    this.firebaseService.getRecipe(this.idMeal)
+    this.firebaseService.getRecipe(this.recipeId)
       .subscribe(
         recipe => {
           this.recipe = recipe.data(), this.isDataAvailable = true;
