@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FirebaseService} from '../services/firebase.service';
-import {NgForm} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-edit-recipe',
@@ -26,7 +25,11 @@ export class EditRecipeComponent implements OnInit {
   private collectionSize;
 
 
-  constructor(public firebaseService: FirebaseService, private route: ActivatedRoute) {
+  constructor(
+    public firebaseService: FirebaseService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.idMeal = route.snapshot.params['recipeId'];
 
     console.log(this.idMeal);
@@ -99,7 +102,7 @@ export class EditRecipeComponent implements OnInit {
   sendToFirebase(recipe) {
     this.firebaseService.createRecipe(recipe).then(
       () => {
-        window.location.href = 'localhost:4200/recipes';
+        this.router.navigate(['/recipes']);
       }
     );
   }
@@ -149,7 +152,8 @@ export class EditRecipeComponent implements OnInit {
       strIngredients: ingredients,
       strMeasures: measures,
     };
-    this.firebaseService.updateRecipe(this.idMeal, recipeToUpdate).then(() => window.location.replace('localhost:4200/recipes'));
+    this.firebaseService.updateRecipe(this.idMeal, recipeToUpdate)
+      .then(() => this.router.navigate(['/recipes']));
   }
 
 }
