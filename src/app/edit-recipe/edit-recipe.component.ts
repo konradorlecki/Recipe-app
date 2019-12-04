@@ -19,11 +19,11 @@ export class EditRecipeComponent implements OnInit {
   public name: string = '';
   public time;
   public description: string;
-  public instruction;
-  public image;
+  public instruction: string;
+  public idMeal: number;
+  public image: string = '';
 
   private collectionSize;
-  private idMeal;
 
 
   constructor(public firebaseService: FirebaseService, private route: ActivatedRoute) {
@@ -36,6 +36,24 @@ export class EditRecipeComponent implements OnInit {
         this.collectionSize = snapshot.size;
       }
     );
+  }
+
+
+  ngOnInit() {
+
+    if (history.state.data !== undefined) {
+      const recipe = history.state.data;
+      this.asignRecipe(recipe);
+    } else if (this.idMeal) {
+      this.firebaseService.getRecipe(this.idMeal)
+        .subscribe(data => {
+          this.asignRecipe(data.data());
+          this.checkDisabledButton();
+        });
+
+
+    }
+    this.checkDisabledButton();
   }
 
   asignRecipe(recipe) {
@@ -54,18 +72,6 @@ export class EditRecipeComponent implements OnInit {
         ingredient: recipe.strIngredients[index],
         measure: recipe.strMeasures[index]
       });
-    }
-  }
-
-  ngOnInit() {
-    console.log(this.idMeal);
-    if (history.state.data !== undefined) {
-      const recipe = history.state.data;
-      this.asignRecipe(recipe);
-    } else if (this.idMeal) {
-      this.firebaseService.getRecipe(this.idMeal)
-        .subscribe(data => this.asignRecipe(data.data()));
-
     }
   }
 
@@ -92,8 +98,8 @@ export class EditRecipeComponent implements OnInit {
 
   sendToFirebase(recipe) {
     this.firebaseService.createRecipe(recipe).then(
-      res => {
-        alert(res);
+      () => {
+        window.location.href = 'localhost:4200/recipes';
       }
     );
   }
@@ -103,8 +109,8 @@ export class EditRecipeComponent implements OnInit {
     this.checkDisabledButton();
   }
 
-  onSubmit(recipe: NgForm) {
-    let value = recipe.value;
+  onAddRecipe() {
+
     let ingredients = [];
     let measures = [];
 
@@ -112,18 +118,27 @@ export class EditRecipeComponent implements OnInit {
       ingredients.push(e.ingredient);
       measures.push(e.measure);
     });
-
-    let recipeToSend = {
-      idMeal: this.idMeal.toString(),
-      strMeal: value.name,
-      strTime: value.time + 'min',
-      strDescription: value.description,
-      strInstructions: value.instruction,
-      strMealThumb: value.image,
+    let recipeToAdd = {
+      idMeal: this.collectionSize.toString(),
+      strMeal: this.name,
+      strTime: this.time + 'min',
+      strDescription: this.description,
+      strInstructions: this.instruction,
+      strMealThumb: this.image,
       strIngredients: ingredients,
       strMeasures: measures,
     };
+    this.sendToFirebase(recipeToAdd);
+  }
 
+  onUpdateRecipe() {
+    let ingredients = [];
+    let measures = [];
+
+    this.ingredients.forEach((e) => {
+      ingredients.push(e.ingredient);
+      measures.push(e.measure);
+    });
     let recipeToUpdate = {
       idMeal: this.idMeal.toString(),
       strMeal: this.name,
@@ -134,12 +149,7 @@ export class EditRecipeComponent implements OnInit {
       strIngredients: ingredients,
       strMeasures: measures,
     };
-
-    if (this.idMeal && this.collectionSize >= this.idMeal) {
-      this.firebaseService.updateRecipe(this.idMeal, recipeToUpdate).then(done => console.log(done));
-    } else {
-      this.sendToFirebase(recipeToSend);
-    }
+    this.firebaseService.updateRecipe(this.idMeal, recipeToUpdate).then(() => window.location.replace('localhost:4200/recipes'));
   }
 
 }
