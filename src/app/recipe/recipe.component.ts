@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FirebaseService} from '../services/firebase.service';
 
 @Component({
@@ -9,22 +9,21 @@ import {FirebaseService} from '../services/firebase.service';
 })
 export class RecipeComponent implements OnInit {
   public recipe;
-  urlString: string = location.href;
   isDataAvailable: boolean = false;
+  idMeal;
 
   constructor(
     private router: Router,
-    public firebaseService: FirebaseService) {
-
+    public firebaseService: FirebaseService,
+    private route: ActivatedRoute) {
+    this.idMeal = route.snapshot.params['recipeId'];
     this.router.routeReuseStrategy.shouldReuseRoute = function() {
       return false;
     };
   }
 
   ngOnInit() {
-    // It works only on localhost url, should be change if url will change(or better idea to check which meal should display)
-    this.urlString = this.urlString.charAt(30);
-    this.firebaseService.getRecipe(this.urlString)
+    this.firebaseService.getRecipe(this.idMeal)
       .subscribe(
         recipe => {
           this.recipe = recipe.data(), this.isDataAvailable = true;

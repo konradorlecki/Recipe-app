@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FirebaseService} from '../services/firebase.service';
 import {NgForm} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-edit-recipe',
@@ -12,19 +13,60 @@ export class EditRecipeComponent implements OnInit {
     ingredient: '',
     measure: ''
   }];
+
   public disabled = true;
+  public recipe;
+  public name: string = '';
+  public time;
+  public description: string;
+  public instruction;
+  public image;
 
-  private id;
+  private collectionSize;
+  private idMeal;
 
-  constructor(public firebaseService: FirebaseService) {
+
+  constructor(public firebaseService: FirebaseService, private route: ActivatedRoute) {
+    this.idMeal = route.snapshot.params['recipeId'];
+
+    console.log(this.idMeal);
+
     this.firebaseService.getRecipes().subscribe(
       snapshot => {
-        this.id = snapshot.size;
+        this.collectionSize = snapshot.size;
       }
     );
   }
 
+  asignRecipe(recipe) {
+    this.name = recipe.strMeal;
+    this.time = parseInt(recipe.strTime);
+    this.description = recipe.strDescription;
+    this.instruction = recipe.strInstructions;
+    this.image = recipe.strMealThumb;
+    this.ingredients = [];
+
+    console.log(recipe);
+    console.log(this.ingredients);
+
+    for (let index in recipe.strIngredients) {
+      this.ingredients.push({
+        ingredient: recipe.strIngredients[index],
+        measure: recipe.strMeasures[index]
+      });
+    }
+  }
+
   ngOnInit() {
+    console.log(this.idMeal);
+    if (history.state.data !== undefined) {
+      const recipe = history.state.data;
+      this.asignRecipe(recipe);
+    } else if (this.idMeal) {
+      this.firebaseService.getRecipe(this.idMeal)
+        .subscribe(data => this.asignRecipe(data.data()));
+
+    }
   }
 
   checkDisabledButton() {
@@ -42,8 +84,9 @@ export class EditRecipeComponent implements OnInit {
         measure: ''
       });
     } else {
-      alert("First complete last input")
+      alert('First complete last input');
     }
+
     this.checkDisabledButton();
   }
 
@@ -69,8 +112,9 @@ export class EditRecipeComponent implements OnInit {
       ingredients.push(e.ingredient);
       measures.push(e.measure);
     });
+
     let recipeToSend = {
-      idMeal: this.id.toString(),
+      idMeal: this.idMeal.toString(),
       strMeal: value.name,
       strTime: value.time + 'min',
       strDescription: value.description,
@@ -79,7 +123,23 @@ export class EditRecipeComponent implements OnInit {
       strIngredients: ingredients,
       strMeasures: measures,
     };
-    this.sendToFirebase(recipeToSend);
+
+    let recipeToUpdate = {
+      idMeal: this.idMeal.toString(),
+      strMeal: this.name,
+      strTime: this.time + 'min',
+      strDescription: this.description,
+      strInstructions: this.instruction,
+      strMealThumb: this.image,
+      strIngredients: ingredients,
+      strMeasures: measures,
+    };
+
+    if (this.idMeal && this.collectionSize >= this.idMeal) {
+      this.firebaseService.updateRecipe(this.idMeal, recipeToUpdate).then(done => console.log(done));
+    } else {
+      this.sendToFirebase(recipeToSend);
+    }
   }
 
 }
