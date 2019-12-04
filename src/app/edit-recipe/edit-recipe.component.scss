@@ -1,5 +1,8 @@
 @import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
 
+.container{
+  width:75vw;
+}
 .editRecipe {
   > form {
     > button {
@@ -20,19 +23,19 @@
   > label:last-of-type {
     float: right;
     text-align: right;
-    margin-right: 10%;
+    margin-right: 16%;
   }
 
   > div {
     margin-bottom:0.5%;
     > input {
-      width: 45%;
+      width: 42%;
       display: inline-block;
     }
 
     > button {
-      margin-left: 4%;
-      width: 6%;
+      width: 65px;
+      float: right;
     }
   }
 }

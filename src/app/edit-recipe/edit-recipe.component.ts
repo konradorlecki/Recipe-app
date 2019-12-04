@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FirebaseService} from '../services/firebase.service';
-import {NgForm} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-edit-recipe',
@@ -12,19 +12,65 @@ export class EditRecipeComponent implements OnInit {
     ingredient: '',
     measure: ''
   }];
+
   public disabled = true;
+  public recipe;
+  public name: string = '';
+  public time;
+  public description: string;
+  public instruction: string;
+  public recipeId: number;
+  public image: string = '';
 
-  private id;
+  private collectionSize;
 
-  constructor(public firebaseService: FirebaseService) {
+
+  constructor(
+    public firebaseService: FirebaseService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.recipeId = route.snapshot.params['recipeId'];
+
     this.firebaseService.getRecipes().subscribe(
       snapshot => {
-        this.id = snapshot.size;
+        this.collectionSize = snapshot.size;
       }
     );
   }
 
+
   ngOnInit() {
+
+    if (history.state.data) {
+      const recipe = history.state.data;
+      this.assignRecipe(recipe);
+    } else if (this.recipeId) {
+      this.firebaseService.getRecipe(this.recipeId)
+        .subscribe(recipe => {
+          this.assignRecipe(recipe.data());
+          this.checkDisabledButton();
+        });
+
+
+    }
+    this.checkDisabledButton();
+  }
+
+  assignRecipe(recipe) {
+    this.name = recipe.strMeal;
+    this.time = parseInt(recipe.strTime);
+    this.description = recipe.strDescription;
+    this.instruction = recipe.strInstructions;
+    this.image = recipe.strMealThumb;
+    this.ingredients = [];
+
+    for (let index in recipe.strIngredients) {
+      this.ingredients.push({
+        ingredient: recipe.strIngredients[index],
+        measure: recipe.strMeasures[index]
+      });
+    }
   }
 
   checkDisabledButton() {
@@ -41,17 +87,16 @@ export class EditRecipeComponent implements OnInit {
         ingredient: '',
         measure: ''
       });
-    } else {
-      alert("First complete last input")
-    }
+    } else alert('First complete last input');
+
+
+
     this.checkDisabledButton();
   }
 
   sendToFirebase(recipe) {
     this.firebaseService.createRecipe(recipe).then(
-      res => {
-        alert(res);
-      }
+      () => this.router.navigate(['/recipes'])
     );
   }
 
@@ -60,8 +105,28 @@ export class EditRecipeComponent implements OnInit {
     this.checkDisabledButton();
   }
 
-  onSubmit(recipe: NgForm) {
-    let value = recipe.value;
+  onAddRecipe() {
+    let ingredients = [];
+    let measures = [];
+
+    this.ingredients.forEach((item) => {
+      ingredients.push(item.ingredient);
+      measures.push(item.measure);
+    });
+    const recipeToAdd = {
+      idMeal: this.collectionSize.toString(),
+      strMeal: this.name,
+      strTime: this.time + 'min',
+      strDescription: this.description,
+      strInstructions: this.instruction,
+      strMealThumb: this.image,
+      strIngredients: ingredients,
+      strMeasures: measures,
+    };
+    this.sendToFirebase(recipeToAdd);
+  }
+
+  onUpdateRecipe() {
     let ingredients = [];
     let measures = [];
 
@@ -69,17 +134,18 @@ export class EditRecipeComponent implements OnInit {
       ingredients.push(e.ingredient);
       measures.push(e.measure);
     });
-    let recipeToSend = {
-      idMeal: this.id.toString(),
-      strMeal: value.name,
-      strTime: value.time + 'min',
-      strDescription: value.description,
-      strInstructions: value.instruction,
-      strMealThumb: value.image,
+    const recipeToUpdate = {
+      idMeal: this.recipeId.toString(),
+      strMeal: this.name,
+      strTime: this.time + 'min',
+      strDescription: this.description,
+      strInstructions: this.instruction,
+      strMealThumb: this.image,
       strIngredients: ingredients,
       strMeasures: measures,
     };
-    this.sendToFirebase(recipeToSend);
+    this.firebaseService.updateRecipe(this.recipeId, recipeToUpdate)
+      .then(() => this.router.navigate(['/recipes']));
   }
 
 }

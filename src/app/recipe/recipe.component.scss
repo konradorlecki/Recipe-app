@@ -47,7 +47,11 @@
         margin-top: 4vh;
       }
 
-      > button {
+      > a {
+        display: block;
+        padding-top: 7px;
+        text-decoration: none;
+        text-align: center;
         background: white;
         color: #fb1;
         border: 1px solid #fb1;
