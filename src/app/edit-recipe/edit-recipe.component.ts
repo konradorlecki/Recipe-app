@@ -28,10 +28,10 @@ export class EditRecipeComponent implements OnInit {
   constructor(
     public firebaseService: FirebaseService,
     private route: ActivatedRoute,
-    private router: Router
-  ) {
+    private router: Router,
+  )
+  {
     this.recipeId = route.snapshot.params['recipeId'];
-
     this.firebaseService.getRecipes().subscribe(
       snapshot => {
         this.collectionSize = snapshot.size;
@@ -41,7 +41,6 @@ export class EditRecipeComponent implements OnInit {
 
 
   ngOnInit() {
-
     if (history.state.data) {
       const recipe = history.state.data;
       this.assignRecipe(recipe);

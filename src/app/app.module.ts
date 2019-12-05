@@ -14,6 +14,7 @@ import {EditRecipeComponent} from './edit-recipe/edit-recipe.component';
 import {FormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +22,6 @@ import {AppRoutingModule} from './app-routing.module';
     RecipeComponent,
     NavBarComponent,
     EditRecipeComponent,
-
   ],
   imports: [
     BrowserModule,
