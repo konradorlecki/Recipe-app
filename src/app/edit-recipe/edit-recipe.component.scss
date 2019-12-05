@@ -9,8 +9,9 @@
       margin-top: 3vh;
     }
 
-    > button:last-of-type {
+    > button:nth-of-type(n+2) {
       float: right;
+      margin-left:1.5vw;
     }
   }
 }

@@ -94,6 +94,7 @@ export class EditRecipeComponent implements OnInit {
   }
 
   sendToFirebase(recipe) {
+    console.log(recipe);
     this.firebaseService.createRecipe(recipe).then(
       () => this.router.navigate(['/recipes'])
     );
@@ -113,7 +114,7 @@ export class EditRecipeComponent implements OnInit {
       measures.push(item.measure);
     });
     const recipeToAdd = {
-      idMeal: this.collectionSize.toString(),
+      recipeId: this.collectionSize.toString(),
       strMeal: this.name,
       strTime: this.time + 'min',
       strDescription: this.description,
@@ -134,17 +135,25 @@ export class EditRecipeComponent implements OnInit {
       measures.push(e.measure);
     });
     const recipeToUpdate = {
-      idMeal: this.recipeId.toString(),
+      recipeId: this.recipeId.toString(),
       strMeal: this.name,
       strTime: this.time + 'min',
-      strDescription: this.description,
+      strDescription:  this.description,
       strInstructions: this.instruction,
-      strMealThumb: this.image,
+      strMealThumb:  this.image,
       strIngredients: ingredients,
       strMeasures: measures,
     };
     this.firebaseService.updateRecipe(this.recipeId, recipeToUpdate)
-      .then(() => this.router.navigate(['/recipes']));
+      .then((ref) => {
+        console.log(ref)
+        this.router.navigate(['/recipes'])});
+  }
+  onDeleteRecipe(){
+    this.firebaseService.deleteRecipe(this.recipeId)
+      .then((ref)=>{
+        console.log(ref);
+        this.router.navigate(['/recipes'])});
   }
 
 }
