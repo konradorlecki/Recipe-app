@@ -53,5 +53,8 @@ export class FirebaseService {
   login(email, password) {
     return this.fireAuth.auth.signInWithEmailAndPassword(email, password);
   }
+  logout() {
+    return this.fireAuth.auth.signOut();
+  }
 
 }

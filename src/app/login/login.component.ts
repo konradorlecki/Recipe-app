@@ -23,7 +23,10 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.firebaseService.login(this.email, this.password)
-      .then(work => console.log(work))
+      .then(work => {
+        this.router.navigate(['/recipes']);
+        sessionStorage.setItem('isLoggedIn', 'true');
+      })
       .catch(err => console.log(err));
   }
 }
