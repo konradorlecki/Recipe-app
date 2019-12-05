@@ -31,7 +31,6 @@ export class EditRecipeComponent implements OnInit {
     private router: Router
   ) {
     this.recipeId = route.snapshot.params['recipeId'];
-
     this.firebaseService.getRecipes().subscribe(
       snapshot => {
         this.collectionSize = snapshot.size;
@@ -41,7 +40,6 @@ export class EditRecipeComponent implements OnInit {
 
 
   ngOnInit() {
-
     if (history.state.data) {
       const recipe = history.state.data;
       this.assignRecipe(recipe);
@@ -87,8 +85,9 @@ export class EditRecipeComponent implements OnInit {
         ingredient: '',
         measure: ''
       });
-    } else alert('First complete last input');
-
+    } else {
+      alert('First complete last input');
+    }
 
 
     this.checkDisabledButton();
@@ -114,7 +113,7 @@ export class EditRecipeComponent implements OnInit {
       measures.push(item.measure);
     });
     const recipeToAdd = {
-      idMeal: this.collectionSize.toString(),
+      recipeId: this.collectionSize.toString(),
       strMeal: this.name,
       strTime: this.time + 'min',
       strDescription: this.description,
@@ -135,7 +134,7 @@ export class EditRecipeComponent implements OnInit {
       measures.push(e.measure);
     });
     const recipeToUpdate = {
-      idMeal: this.recipeId.toString(),
+      recipeId: this.recipeId.toString(),
       strMeal: this.name,
       strTime: this.time + 'min',
       strDescription: this.description,
@@ -145,7 +144,16 @@ export class EditRecipeComponent implements OnInit {
       strMeasures: measures,
     };
     this.firebaseService.updateRecipe(this.recipeId, recipeToUpdate)
-      .then(() => this.router.navigate(['/recipes']));
+      .then(() => {
+        this.router.navigate(['/recipes']);
+      });
+  }
+
+  onDeleteRecipe() {
+    this.firebaseService.deleteRecipe(this.recipeId)
+      .then(() => {
+        this.router.navigate(['/recipes']);
+      });
   }
 
 }

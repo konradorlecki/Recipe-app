@@ -3,7 +3,7 @@
   <div class="container">
     <div [ngClass]="'editRecipe'">
       <h1>Add your Recipe</h1>
-      <form #RecipeForm="ngForm">
+      <form>
         <div class="form-group">
           <label for="name">Name</label>
           <input type="text" class="form-control" id="name"
@@ -45,8 +45,11 @@
           </div>
         </div>
         <button type="button" (click)="addIngredient()" class="btn btn-primary">Add ingredient</button>
-        <button *ngIf="recipeId" type="button" (click)="onUpdateRecipe()" class="btn btn-success">Update</button>
-        <button *ngIf="!recipeId" type="button" (click)="onAddRecipe()" class="btn btn-success">Add</button>
+        <div *ngIf="recipeId">
+          <button type="button" (click)="onDeleteRecipe()" class="btn btn-danger">Delete Recipe</button>
+          <button type="button" (click)="onUpdateRecipe()" class="btn btn-success">Update</button>
+        </div>
+          <button *ngIf="!recipeId" type="button" (click)="onAddRecipe()" class="btn btn-success">Add</button>
       </form>
     </div>
   </div>
