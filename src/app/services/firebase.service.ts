@@ -30,8 +30,7 @@ export class FirebaseService {
     });
   }
 
-  updateRecipe(recipeId, recipe){
-    console.log(recipe.recipeId);
+  updateRecipe(recipeId, recipe) {
     return this.db.collection('recipes').doc(recipeId).update({
       idMeal: recipe.recipeId,
       strMeal: recipe.strMeal,
@@ -41,10 +40,11 @@ export class FirebaseService {
       strMealThumb: recipe.strMealThumb,
       strIngredients: recipe.strIngredients,
       strMeasures: recipe.strMeasures,
-    })
+    });
   }
-  deleteRecipe(recipeId){
-    return this.db.collection('recipes').doc(recipeId).delete()
+
+  deleteRecipe(recipeId) {
+    return this.db.collection('recipes').doc(recipeId).delete();
   }
 
 

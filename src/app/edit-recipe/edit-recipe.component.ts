@@ -28,9 +28,8 @@ export class EditRecipeComponent implements OnInit {
   constructor(
     public firebaseService: FirebaseService,
     private route: ActivatedRoute,
-    private router: Router,
-  )
-  {
+    private router: Router
+  ) {
     this.recipeId = route.snapshot.params['recipeId'];
     this.firebaseService.getRecipes().subscribe(
       snapshot => {
@@ -86,15 +85,15 @@ export class EditRecipeComponent implements OnInit {
         ingredient: '',
         measure: ''
       });
-    } else alert('First complete last input');
-
+    } else {
+      alert('First complete last input');
+    }
 
 
     this.checkDisabledButton();
   }
 
   sendToFirebase(recipe) {
-    console.log(recipe);
     this.firebaseService.createRecipe(recipe).then(
       () => this.router.navigate(['/recipes'])
     );
@@ -138,22 +137,23 @@ export class EditRecipeComponent implements OnInit {
       recipeId: this.recipeId.toString(),
       strMeal: this.name,
       strTime: this.time + 'min',
-      strDescription:  this.description,
+      strDescription: this.description,
       strInstructions: this.instruction,
-      strMealThumb:  this.image,
+      strMealThumb: this.image,
       strIngredients: ingredients,
       strMeasures: measures,
     };
     this.firebaseService.updateRecipe(this.recipeId, recipeToUpdate)
-      .then((ref) => {
-        console.log(ref)
-        this.router.navigate(['/recipes'])});
+      .then(() => {
+        this.router.navigate(['/recipes']);
+      });
   }
-  onDeleteRecipe(){
+
+  onDeleteRecipe() {
     this.firebaseService.deleteRecipe(this.recipeId)
-      .then((ref)=>{
-        console.log(ref);
-        this.router.navigate(['/recipes'])});
+      .then(() => {
+        this.router.navigate(['/recipes']);
+      });
   }
 
 }
