@@ -19,7 +19,8 @@ export class RegisterComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   register() {
     if (this.password === this.password2) {
@@ -28,9 +29,9 @@ export class RegisterComponent implements OnInit {
           console.log(done);
           this.router.navigate(['/recipes']);
         }
-      ).catch(err=>alert(err));
-    }else {
-      alert('Passwords must be identical')
+      ).catch(err => alert(err));
+    } else {
+      alert('Passwords must be identical');
     }
   }
 }
