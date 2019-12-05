@@ -47,9 +47,11 @@
         <button type="button" (click)="addIngredient()" class="btn btn-primary">Add ingredient</button>
         <div *ngIf="recipeId">
           <button type="button" (click)="onDeleteRecipe()" class="btn btn-danger">Delete Recipe</button>
-          <button type="button" (click)="onUpdateRecipe()" class="btn btn-success">Update</button>
+          <button type="button" (click)="onUpdateRecipe()" class="btn btn-success">Update Recipe</button>
         </div>
-          <button *ngIf="!recipeId" type="button" (click)="onAddRecipe()" class="btn btn-success">Add</button>
+        <div *ngIf="!recipeId">
+          <button type="button" (click)="onAddRecipe()" class="btn btn-success">Add Recipe</button>
+        </div>
       </form>
     </div>
   </div>
