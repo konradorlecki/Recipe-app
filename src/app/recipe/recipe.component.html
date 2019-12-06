@@ -8,7 +8,7 @@
       </div>
       <p>{{recipe.strDescription}}</p>
       <div>
-        <a [routerLink]="['/recipes', recipe.idMeal, 'edit']" [state]="{data:recipe}">Edit</a>
+        <a *ngIf="isLoggedIn" [routerLink]="['/recipes', recipe.idMeal, 'edit']" [state]="{data:recipe}">Edit</a>
         <h2>Ingredients</h2>
         <ul>
           <li *ngFor="let measure of recipe.strMeasures">

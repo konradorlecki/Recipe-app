@@ -11,6 +11,7 @@ export class RecipeComponent implements OnInit {
   public recipe;
   isDataAvailable: boolean = false;
   recipeId;
+  isLoggedIn;
 
   constructor(
     private router: Router,
@@ -23,6 +24,7 @@ export class RecipeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isLoggedIn = sessionStorage.getItem('isLoggedIn');
     this.firebaseService.getRecipe(this.recipeId)
       .subscribe(
         recipe => {
