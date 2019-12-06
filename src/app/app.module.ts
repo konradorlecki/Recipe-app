@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import {environment} from '../environments/environment';
 
 
@@ -11,8 +12,10 @@ import {HomePageComponent} from './home-page/home-page.component';
 import {RecipeComponent} from './recipe/recipe.component';
 import {NavBarComponent} from './nav-bar/nav-bar.component';
 import {EditRecipeComponent} from './edit-recipe/edit-recipe.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -22,14 +25,18 @@ import {AppRoutingModule} from './app-routing.module';
     RecipeComponent,
     NavBarComponent,
     EditRecipeComponent,
+    RegisterComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    AngularFireAuthModule,
     FormsModule,
     AppRoutingModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

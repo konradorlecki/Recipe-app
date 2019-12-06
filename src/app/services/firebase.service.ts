@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
+import {AngularFireAuth} from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
 
-  constructor(public db: AngularFirestore) {
+  constructor(public db: AngularFirestore, private fireAuth: AngularFireAuth) {
   }
 
   getRecipe(recipeId) {
@@ -46,6 +47,11 @@ export class FirebaseService {
   deleteRecipe(recipeId) {
     return this.db.collection('recipes').doc(recipeId).delete();
   }
-
+  register(email, password) {
+    return this.fireAuth.auth.createUserWithEmailAndPassword(email, password);
+  }
+  login(email, password) {
+    return this.fireAuth.auth.signInWithEmailAndPassword(email, password);
+  }
 
 }
